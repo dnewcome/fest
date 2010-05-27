@@ -6,10 +6,10 @@ namespace Djn
 	public class TestFixture
 	{
 		[FestTest]
-		public void Test1()
-		{
+		public void Test1() {
 			Console.WriteLine( "ran test1" );
 		}
+
 		public static void Main() {
 			Fest.Run();
 			Console.ReadLine();
