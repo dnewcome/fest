@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace Djn 
+namespace Djn.Testing
 {
 	[AttributeUsage( AttributeTargets.Method, AllowMultiple = true )]
 	public class FestFixture : Attribute {
