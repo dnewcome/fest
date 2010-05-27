@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="fest.cs" />
+	<Compile Include="test.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
