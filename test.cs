@@ -14,14 +14,24 @@ namespace Djn
 	public class Tests
 	{
 		[FestTest]
-		[FestFixture(typeof(MyFixture))]
+		[FestFixture( typeof( MyFixture ) )]
 		[FestFixture( typeof( MyFixture2 ) )]
 		public void Test1( MyFixture myfixture, MyFixture2 myfixture2 ) {
-			Console.WriteLine( "ran test1" );
-			Console.WriteLine( myfixture.teststring );
-			Console.WriteLine( myfixture2.teststring );
+			Fest.Equal<string>( myfixture.teststring, "teststring");
+			Fest.Equal<string>( myfixture2.teststring, "teststring2" );
+			Fest.Equal<int>( 2, 1 + 1 );
+			Fest.Equal<object>( new object(), new object() );
+			object obj = new object();
+			object obj2 = obj;
+			Fest.Equal<object>( obj, obj2 );
+			Fest.Equal<int>( 2, 1 + 2 );
 		}
 
+		[FestTest]
+		public void Test2( MyFixture myfixture, MyFixture2 myfixture2 ) {
+			Fest.Equal<int>( 1, 1 );
+		}
+		
 		public static void Main() {
 			Fest.Run();
 			Console.ReadLine();
