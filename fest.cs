@@ -1,21 +1,22 @@
+/**
+* Fest is a simple .NET testing tool and is free
+*	software provided under the MIT license.
+*
+*	See LICENSE file for full text of the license.
+*	Copyright 2010 Dan Newcome.
+*/
+
 using System;
 using System.Reflection;
 
 namespace Djn.Testing
 {
-	[AttributeUsage( AttributeTargets.Method, AllowMultiple = true )]
-	public class FestFixture : Attribute {
-		public Type fixtureType;
-		public FestFixture( Type in_fixtureType ) {
-			fixtureType = in_fixtureType;
-		}
-	}
-
-	[AttributeUsage( AttributeTargets.Method, AllowMultiple = false )]
-	public class FestTest : Attribute {}
-
 	public class Fest 
 	{
+		/**
+		* Run searches the loaded assembly for methods marked with [FestTest]
+		*	and executes them with any specified [FestFixture] attributes.
+		*/
 		public static void Run() {
 			int testcount = 0, failcount = 0;
 			Assembly executingAssembly = Assembly.GetExecutingAssembly();
@@ -31,7 +32,10 @@ namespace Djn.Testing
 							for( int i=0; i < fixtures.Length; i++ ) {
 								// NOTE: we reverse the args. This is a little suspect, will have to read up more
 								// on whether the order of attributes is always the order that they are declared
-								args[ fixtures.Length - 1 - i ] = Activator.CreateInstance( ( ( FestFixture )fixtures[i] ).fixtureType );
+								args[ fixtures.Length - 1 - i ] = 
+									Activator.CreateInstance( 
+										( ( FestFixture )fixtures[i] ).fixtureType 
+									);
 							}
 							try {
 								testcount++;
@@ -79,4 +83,16 @@ namespace Djn.Testing
 		}
 
 	} // class
+	
+	[AttributeUsage( AttributeTargets.Method, AllowMultiple = true )]
+	public class FestFixture : Attribute {
+		public Type fixtureType;
+		public FestFixture( Type in_fixtureType ) {
+			fixtureType = in_fixtureType;
+		}
+	}
+
+	[AttributeUsage( AttributeTargets.Method, AllowMultiple = false )]
+	public class FestTest : Attribute {}
+	
 } // namespace
