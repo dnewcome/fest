@@ -1,5 +1,5 @@
 # About
-Fest is a simple, ebmedded testing tool for the .NET framework.
+Fest is a simple, embedded testing tool for the .NET framework.
  It is intended to produce executable
 test assemblies. Fest only has two configuration attributes and does
 not use a separate test runner. Fest runs any method in the assembly that is marked
