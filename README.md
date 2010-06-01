@@ -1,5 +1,6 @@
 # About
-Fest is a simple, ebmedded testing tool. It is intended to produce executable
+Fest is a simple, ebmedded testing tool for the .NET framework.
+ It is intended to produce executable
 test assemblies. Fest only has two configuration attributes and does
 not use a separate test runner. Fest runs any method in the assembly that is marked
 as a test - there are no special test classes. Test data can be supplied to
