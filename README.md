@@ -26,7 +26,10 @@ Fixtures are applied to tests declaratively using FestFixture attributes.
 	public void Test1( MyFixture myfixture ) {
 		Fest.Equal<string>( myfixture.teststring, "teststring");
 	}
-		
+
+All tests must reside in the current assembly and are run using:
+	Fest.Run()
+
 # Future Work
 Fest supplies almost none of its own assertions, although the only real requirement
 is that the assert method throw an exception, so assert methods from other libraries
