@@ -9,6 +9,8 @@
 using System;
 using System.Reflection;
 
+[assembly: AssemblyVersion( "0.1.0.0" )]
+[assembly: AssemblyFileVersion( "0.1.0.0" )]
 namespace Djn.Testing
 {
 	public class Fest 
@@ -19,7 +21,7 @@ namespace Djn.Testing
 		*/
 		public static void Run() {
 			int testcount = 0, failcount = 0;
-			Assembly executingAssembly = Assembly.GetExecutingAssembly();
+			Assembly executingAssembly = Assembly.GetCallingAssembly();
 			Type[] types = executingAssembly.GetTypes();
 			foreach( Type type in types ) {
 				MethodInfo[] methods = type.GetMethods();

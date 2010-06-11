@@ -5,10 +5,10 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{0CC44269-D9A6-4D70-9644-16D6B7DA2E06}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{906791D1-B135-4ADD-8816-0622A9FF40B0}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <RootNamespace>Djn</RootNamespace>
-    <AssemblyName>Fest</AssemblyName>
+    <AssemblyName>FestTest</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -42,7 +42,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fest.cs" />
+    <Compile Include="test.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="fest.csproj">
+      <Project>{0CC44269-D9A6-4D70-9644-16D6B7DA2E06}</Project>
+      <Name>fest</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
