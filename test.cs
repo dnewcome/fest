@@ -17,19 +17,20 @@ namespace Djn
 		[FestFixture( typeof( MyFixture ) )]
 		[FestFixture( typeof( MyFixture2 ) )]
 		public void Test1( MyFixture myfixture, MyFixture2 myfixture2 ) {
-			Fest.Equal<string>( myfixture.teststring, "teststring");
-			Fest.Equal<string>( myfixture2.teststring, "teststring2" );
-			Fest.Equal<int>( 2, 1 + 1 );
-			Fest.Equal<object>( new object(), new object() );
+			Fest.AssertEqual<string>( myfixture.teststring, "teststring");
+			Fest.AssertEqual<string>( myfixture2.teststring, "teststring2" );
+			Fest.AssertEqual<int>( 2, 1 + 1 );
+			Fest.AssertEqual<object>( new object(), new object() );
 			object obj = new object();
 			object obj2 = obj;
-			Fest.Equal<object>( obj, obj2 );
-			Fest.Equal<int>( 2, 1 + 2 );
+			Fest.AssertEqual<object>( obj, obj2 );
+			Fest.AssertEqual<int>( 2, 1 + 2 );
 		}
 
 		[FestTest]
-		public void Test2( MyFixture myfixture, MyFixture2 myfixture2 ) {
-			Fest.Equal<int>( 1, 1 );
+		public void Test2() {
+			Fest.AssertEqual<int>( 1, 1 );
+			Fest.AssertTrue( false, "intentionally false assertion" );
 		}
 		
 		public static void Main() {

@@ -9,8 +9,8 @@
 using System;
 using System.Reflection;
 
-[assembly: AssemblyVersion( "0.1.0.0" )]
-[assembly: AssemblyFileVersion( "0.1.0.0" )]
+[assembly: AssemblyVersion( "0.2.0.0" )]
+[assembly: AssemblyFileVersion( "0.2.0.0" )]
 namespace Djn.Testing
 {
 	public class Fest 
@@ -28,33 +28,29 @@ namespace Djn.Testing
 				foreach( MethodInfo method in methods ) {
 					object[] attributes = method.GetCustomAttributes( typeof( FestTest ), true );
 					if( attributes.Length > 0 ) {
-						object[] fixtures = method.GetCustomAttributes( typeof( FestFixture ), true );
-						if( fixtures.Length > 0 ) {
-							object[] args = new object[ fixtures.Length ];
-							for( int i=0; i < fixtures.Length; i++ ) {
-								// NOTE: we reverse the args. This is a little suspect, will have to read up more
-								// on whether the order of attributes is always the order that they are declared
-								args[ fixtures.Length - 1 - i ] = 
-									Activator.CreateInstance( 
-										( ( FestFixture )fixtures[i] ).fixtureType 
-									);
+						try {
+							object[] fixtures = method.GetCustomAttributes( typeof( FestFixture ), true );
+							object[] args;
+							if( fixtures.Length > 0 ) {
+								args = new object[ fixtures.Length ];
+								for( int i=0; i < fixtures.Length; i++ ) {
+									// NOTE: we reverse the args. This is a little suspect, will have to read up more
+									// on whether the order of attributes is always the order that they are declared
+									args[ fixtures.Length - 1 - i ] = 
+										Activator.CreateInstance( 
+											( ( FestFixture )fixtures[i] ).fixtureType 
+										);
+								}
 							}
-							try {
-								testcount++;
-								method.Invoke( Activator.CreateInstance( type ), args );
+							else {
+								args = new object[]{};
 							}
-							catch {
-								failcount++;
-							}
+							testcount++;
+							method.Invoke( Activator.CreateInstance( type ), args );
 						}
-						else {
-							try {
-								testcount++;
-								method.Invoke( Activator.CreateInstance( type ), new object[] { } );
-							}
-							catch {
-								failcount++;
-							}
+						catch( Exception e ) {
+							failcount++;
+							Console.WriteLine( e.InnerException.ToString() );
 						}
 					}
 				}
@@ -62,7 +58,7 @@ namespace Djn.Testing
 			Console.WriteLine( "Total tests: " + testcount + ", Failures: " + failcount );
 		}
 		
-		public static void Equal<T>( T expected, T actual ) {
+		public static void AssertEqual<T>( T expected, T actual ) {
 			if( expected.Equals( actual ) ) {
 				Console.Write( "." );
 			}
@@ -74,16 +70,26 @@ namespace Djn.Testing
 				Console.WriteLine( typename + "." + methodname + " : Equal<T>() Failure" );
 				Console.WriteLine( "Expected: " + expected.ToString() );
 				Console.WriteLine( "Actual: " + actual.ToString() );
-				throw new Exception();
-			}
-		}
-		
-		public static void Assert( bool condition, string message ) {
-			if( condition == false ) {
-				Console.WriteLine( message );
+				throw new Exception( "Assertion failed" );
 			}
 		}
 
+		public static void AssertFalse( bool condition, string message ) {
+			AssertTrue( !condition, message );
+		}
+
+		public static void AssertTrue( bool condition, string message ) {
+			if( condition == false ) {
+				string typename = new System.Diagnostics.StackFrame( 1 ).GetMethod().DeclaringType.Name;
+				string methodname = new System.Diagnostics.StackFrame( 1 ).GetMethod().Name;
+				string assertionname = new System.Diagnostics.StackFrame( 0 ).GetMethod().Name;
+
+				Console.WriteLine();
+				Console.WriteLine( "Failure " + typename + "." + methodname + " : " + assertionname );
+				Console.WriteLine( message );
+				throw new Exception( "Assertion failed" );
+			}
+		}
 	} // class
 	
 	[AttributeUsage( AttributeTargets.Method, AllowMultiple = true )]
